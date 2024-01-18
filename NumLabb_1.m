@@ -27,6 +27,10 @@ r=b-A*x
 %dessa approximeras, och har inte med fullständiga 
 %värdet och därmed blir inte b exakt lika med A*x
 
+%% Uppg 2
+
+
+
 %% Uppg 3 
 
 function y = f(x)
