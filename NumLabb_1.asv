@@ -124,17 +124,6 @@ end;
 
 rot_NR=x
 
-% d)
-% Kvadratisk konvergens definieras som hastigheten med vilken felet minskar
-% det vill säga att en lösningsmetod har kvadratisk konvergens om felet
-% minskar kvadratiskt, dvs att felet är proportionellt med kvadraten av det
-% föregående felet. Alltså är det mått på hur snabbt metoden närmar sig
-% rätt svar.
-% 
-% lim (n → ∞) |e_(n+1)| / |e_n|^2 = Konstant
-
-% e)
-
 
 
 %% Uppg 3 
@@ -296,7 +285,7 @@ subplot(3,3,7);
 
     C = [c1,c2,c3];
 
-    
+   
     
 
 

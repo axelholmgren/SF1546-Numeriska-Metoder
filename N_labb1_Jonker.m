@@ -323,7 +323,7 @@ subplot(3,3,4);
     slicedX2 = x(4:9);
     slicedY2 = y(4:9);
     
-    k5 = polyfit(slicedX2, slicedY2, 2); %2:a grads polynom
+    k5 = polyfit(slicedX2, sliced 2Y2, 2); %2:a grads polynom
     f5 = polyval(k5, days);
     plot(days, f5);
     hold on;
