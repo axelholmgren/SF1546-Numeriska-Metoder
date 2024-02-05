@@ -30,9 +30,10 @@ r=b-A*x
 %% Uppg 2
 %% 
 %b)
-%Initiate a figure-window for presenting our plots
+%Initierar ett figure-window för att presentera våra plots
 figure();
 
+%Bytte till engelska här av nån oklar anledning...
 %Define the domain of the function (definitionsmängd) by defining the scope
 %of x ; between -5 and +7.5 with steps of size order 1e-5
 x= -5:1e-5:7.5;
@@ -120,6 +121,17 @@ while abs(rel_err)>1e-8
 end;
 
 root_NR=x
+
+% d)
+% Kvadratisk konvergens definieras som hastigheten med vilken felet minskar
+% det vill säga att en lösningsmetod har kvadratisk konvergens om felet
+% minskar kvadratiskt, dvs att felet är proportionellt med kvadraten av det
+% föregående felet. Alltså är det mått på hur snabbt metoden närmar sig
+% rätt svar.
+% 
+% lim (n → ∞) |e_(n+1)| / |e_n|^2 = Konstant
+
+% e)
 
 
 
