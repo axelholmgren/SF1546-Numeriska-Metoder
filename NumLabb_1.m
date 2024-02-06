@@ -248,7 +248,7 @@ subplot(3,3,4);
     plot(d,p2);
     hold on;
     plot(x,y,'b.');
-    title("2a gradspolynom (1 jun-1 aug");
+    title("2a gradspolynom (1 jun-1 aug)");
     xlabel("Dagar");
     ylabel("Minuter");
     axis([0,365,0,1300]);
@@ -265,7 +265,7 @@ subplot(3,3,5);
     plot(d,p3);
     hold on;
     plot(x,y,'b.');
-    title("2a gradspolynom (1 apr-1 sept");
+    title("2a gradspolynom (1 apr-1 sept)");
     xlabel("Dagar");
     ylabel("Minuter");
     axis([0,365,0,1300]);
@@ -275,7 +275,7 @@ subplot(3,3,5);
 % F) 
 subplot(3,3,6);
     % Grad 2
-    k6 = polyfir(x,y,2);
+    k6 = polyfit(x,y,2);
     p4 = polyval(k6,d);
     plot(d,p4);
     hold on;
@@ -289,12 +289,26 @@ subplot(3,3,6);
 
 % G)
 subplot(3,3,7);
-    w= 2*pi/365;
+    w = 2*pi/365;
     c1 = ones(13,1);
     c2 = cos(w*x);
     c3 = sin(w*x);
-
     C = [c1,c2,c3];
+
+    %beräknar minsta kvadrat c
+
+    c = (C'*C)^(-1)*(C'*y);
+
+    p5 = c(1)+c(2)*cos(w*d)+c(3)*sin(w*d);
+
+    plot(d,p5);
+    hold on;
+    plot(x,y,'b.');
+    title("Minstakvadratanpassad med sinus");
+    xlabel("Dagar")
+    ylabel("Minuter");
+    axis([0,365,0,1300]);
+
 
     
     
