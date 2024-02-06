@@ -308,12 +308,3 @@ subplot(3,3,7);
     xlabel("Dagar")
     ylabel("Minuter");
     axis([0,365,0,1300]);
-
-
-    
-    
-
-
-
-
-
