@@ -101,7 +101,7 @@ df_dx= @(x) 61 - 7*((x.^2+x+0.03)./(3*x+1)).^6*( ( (3*x+1)*(2*x+1) - (x.^2+x+0.0
 
 %Initierar variabler x=input av funktion
 % Val av x1,x2,x3,x4
-x=x4;
+x=x3;
 t=1;
 x_forra=1;
 rel_fel=1;
