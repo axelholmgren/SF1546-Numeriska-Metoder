@@ -2,15 +2,15 @@
 % Uppg 1 - Linjärt ekvationssystem
 
 % 1a)
-
+disp("______  Uppg 1 a) _________")
 %Vi ska lösa ekvationssystemet Ax=b
 %Deffinierar matris A
 A=[1 2 3 0;
   0 4 5 6;
   1 1 -1 0;
-  1 1 1 1]
+  1 1 1 1];
 
-b=[7 6 5 4]'
+b=[7 6 5 4]';
 
 %Definierar x-vektorn
 %x=[x1 x2 x3 x4]'
@@ -94,7 +94,7 @@ x4=6.34;
 
 
 % c) Ta fram en av rötterna med Newtons Metod.
-disp("  _____Uppg 2 c): _________ ")
+disp("  _____________Uppg 2 c): _________ ")
 
 % Derivera funktionen f över x
 df_dx= @(x) 61 - 7*((x.^2+x+0.03)./(3*x+1)).^6*( ( (3*x+1)*(2*x+1) - (x.^2+x+0.03)*(3) )./( (3*x+1)^2 ) ) - 20*(exp(-x)-x.*exp(-x));
@@ -194,52 +194,52 @@ rot_NR=x
 % konstant
 
 %% Uppg 3 
-disp("      _______ Uppg 3 a): _______")
+disp("   ___________ Uppg 3 a): ___________")
 
 % Funktionen f definieras
 f = @(x) 61*x - ((x.^2 + x + 0.03)./(3 * x + 1 )).^7 - 20*x.*exp(-x);
 
 
 
-disp("   ______Sekantmetoden_______");
+disp("  __________Sekantmetoden___________");
 
 %Initialvärden
-x0=0;
-x1=1;
+x0=-1.5;
+x1=-1;
 
 x=x1;
 x_forra=x0; %x0
 f_forra=f(0); %f0
 t_forra=1;
 t_foforra=1;
-disp("   x   f   korrektionsterm konvvergens") 
-while abs(x-x_forra)>1e-8;
+disp("     x        f      korr_term      konverg") 
+format short e
+while abs(x-x_forra)>1e-8
 
     f_n=f(x); %Beräknar nuvarande funktionsvärdet
 
     t_n=f_n*(x-x_forra)/(f_n-f_forra);
 
 
-    disp([x_forra f_forra])
-
-
-    disp([x f_n t_n]) 
-    x_forra=x;
-
     k=t_n/(t_forra*t_foforra);
 
+    disp([x f_n t_n k]) 
+    x_forra=x;
     f_forra=f_n; 
-    t_forra=t_n
     t_foforra=t_forra;
+    t_forra=t_n;
+    
     x=x-t_n; 
     
 
 end; 
 rot=x
 
-% b)
+% c)
 
 % Konvergensordning ca 1.6 (dvs mellan linjär och kvadratisk)
+%  tn ≈K·(tn−1)1.6
+%  tn =K·tn−1 ·tn−2
 
 
 %% uppg 4 Interpolation och linjära minsta kvadratmetoden
