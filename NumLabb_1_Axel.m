@@ -1,49 +1,3 @@
-%% Uppg 2 Icke-linjär skalär ekvation med Newtons metod
-% b 
-% Definierar x värden
-x = -3:1e-4:6.5;
-
-% Funktion
-f = @(x) 61*x - ((x.^2 + x + 0.03)./(3 * x + 1 )).^7 - 20*x.*exp(-x);
-y = f(x);
-
-% Plottar functionen
-plot(x, y, 'LineWidth', 2);
-ylim([-100, 300])
-xlim([-1,11])
-title('Function Lab1 Uppgift 2')
-xlabel('x');
-ylabel('y');
-grid on;
-
-% Visa plott
-legend('Lab1uppg2func');
-
-% c
-% Newtons Metod
-initialgissning = 1;
-tolerans = 1e-10;
-maxIterationer = 100;
-
-% Definierar derivatan
-fDerivata = @(x) 61 + 21*((x.^2+x+0.03)./(3.*x+1)^8) - 7*((2.*x+1)*(x.^2+x+0.03).^6)./((3*x+1).^7) - 20.*exp(-x) + 20*x.*exp(-x);
-
-% Newtons metod
-forraApprox = initialgissning;
-for iteration = 1:maxIterationer
-    x1 = initialgissning - f(initialgissning) / fDerivata(initialgissning);
-    if abs(x1 - initialgissning) < tolerans
-        break;
-    end
-
-    initialgissning = x1;
-end
-
-rot = initialgissning;
-iterations = iteration;
-disp(['Rot: ' num2str(rot)]);
-disp(['Antal interationer: ' num2str(iterations)]);
-
 %% uppg 4 Interpolation och linjära minsta kvadratmetoden
 
 % Matrisen A ger datum: tid (sekunder)
@@ -246,4 +200,262 @@ subplot(3,3,8);
 % Det går inte att säga att en är bättre än den andra, det beror på vad som
 % pritoriteras.
 
-%% Uppgift 5 
+%% Uppgift 5 Tillförlitlighet
+
+%% Från Uppgift 2:
+    % Initierar ett figurfönster för att presentera plottar.
+    figure();
+    
+    % Definierar funktionens definitionsmängd genom att definitera: x mellan -5
+    % och 7.5 med steglängd 1e-5
+    x= -5:1e-5:7.5;
+    
+    % Definierar funktionen f(x)
+    f = @(x) 61*x - ((x.^2 + x + 0.03)./(3*x + 1)).^7 - 20*x.*exp(-x);
+    
+    
+    % Ger funktionens värdemängd, y är resultatet av x genom funktionen.
+    % Skapar en vektor av samma längd
+    y = f(x);
+    
+    % Skapar 5 subplottar, 4 för rötter och en för funktionen i helhet.
+    subplot(3, 2, 1);
+        plot(x, y);
+            title('Rot 1');
+            xlim([-1.15, -1.1]);
+            ylim([-1, 1]);
+            yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+    
+    subplot(3, 2, 2);
+        plot(x, y);
+            title('Rot 2');
+            xlim([-0.30, -0.28]);
+            ylim([-1, 1]);
+            yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+    
+    subplot(3, 2, 3);
+        plot(x, y);
+            title('Rot 3');
+            xlim([-0.001, 0.001]);
+            ylim([-0.05, 0.05]);
+            yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+    
+    subplot(3, 2, 4);
+        plot(x, y);
+            title('Rot 4');
+            xlim([6.35, 6.45]);
+            ylim([-2, 2]);
+            yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+    
+    subplot(3, 2, 5:6);
+        plot(x, y);
+            title('y=f(x)');
+            xlim([-3, 7]);
+            ylim([-300, 300]);        
+            yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+    
+    
+    %exportgraphics(gcf,'arrayAntennaMeshMew.png','Resolution',300);
+    
+    
+    % Från plottarna can rötterna grafiskt lokaliseras i följande:
+    x1=-1.15;
+    x2=-0.29;
+    x3=1e-2;
+    x4=6.34;
+    
+    
+    % c) Ta fram en av rötterna med Newtons Metod.
+    disp("  _____Uppg 2 c): _________ ")
+    
+    % Derivera funktionen f över x
+    df_dx= @(x) 61 - 7*((x.^2+x+0.03)./(3*x+1)).^6*( ( (3*x+1)*(2*x+1) - (x.^2+x+0.03)*(3) )./( (3*x+1)^2 ) ) - 20*(exp(-x)-x.*exp(-x));
+    
+    %Initierar variabler x=input av funktion
+    % Val av x1,x2,x3,x4
+    x=x4;
+    t=1;
+    x_forra=1;
+    rel_fel=1;
+    format short 
+    disp("    ___________________Newton Raphson_____________________")
+    disp("      x       fx       dfx_dx       t       lin       kvad");
+    %Iterativ metod med Newton raphson
+    while abs(rel_fel)>1e-8
+        fx=f(x);
+        dfx_dx=df_dx(x);
+    
+        %Newton Raphsons metod
+        t_forra=t;
+        t=fx/dfx_dx;
+        
+        lin=t/t_forra;
+        kvad=t/(t_forra^2);
+        
+        disp([x fx dfx_dx t lin kvad]);
+        x_forra=x;
+        x=x-t;
+        rel_fel=(x-x_forra)/x;
+    end;
+    format long e
+    rot_nr=x
+    
+    rot_1_nr=-1.115141590525118e+00;
+    rot_2_nr=-2.910130809545486e-01;
+    rot_3_nr=5.334146342066178e-13;
+    rot_4_nr=6.397062994660476e+00;
+    rotter=[rot_1_nr rot_2_nr rot_3_nr rot_4_nr];
+    
+    format short 
+    
+    disp(["Rot 1" "Rot 2" "Rot 3" "Rot 4"])
+    disp([ rotter ])
+    
+    
+    
+    
+    % d)
+    % Kvadratisk konvergens definieras som hastigheten med vilken felet minskar
+    % det vill säga att en lösningsmetod har kvadratisk konvergens om felet
+    % minskar kvadratiskt, dvs att felet är proportionellt med kvadraten av det
+    % föregående felet. Alltså är det mått på hur snabbt metoden närmar sig
+    % rätt svar.
+    % 
+    % lim (n → ∞) |e_(n+1)| / |e_n|^2 = Konstant
+%% 
+
+% Initierar ett figurfönster för att presentera plottar.
+figure();
+
+% Definierar funktionens definitionsmängd genom att definitera: x mellan -5
+% och 7.5 med steglängd 1e-5
+x= -5:1e-5:7.5;
+
+% Definierar funktionen f(x)
+f = @(x) 61*x - ((x.^2 + x + 0.03)./(3*1.01*x + 1)).^7 - 20*x.*exp(-x);
+
+
+% Ger funktionens värdemängd, y är resultatet av x genom funktionen.
+% Skapar en vektor av samma längd
+y = f(x);
+                                                
+% Skapar 5 subplottar, 4 för rötter och en för funktionen i helhet.
+subplot(3, 2, 1);
+    plot(x, y);
+        title('Rot 1');
+        xlim([-1.15, -1.1]);
+        ylim([-1, 1]);
+        yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+
+subplot(3, 2, 2);
+    plot(x, y);
+        title('Rot 2');
+        xlim([-0.30, -0.28]);
+        ylim([-1, 1]);
+        yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+
+subplot(3, 2, 3);
+    plot(x, y);
+        title('Rot 3');
+        xlim([-0.001, 0.001]);
+        ylim([-0.05, 0.05]);
+        yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+
+subplot(3, 2, 4);
+    plot(x, y);
+        title('Rot 4');
+        xlim([6.35, 6.45]);
+        ylim([-2, 2]);
+        yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+
+subplot(3, 2, 5:6);
+    plot(x, y);
+        title('y=f(x)');
+        xlim([-3, 7]);
+        ylim([-300, 300]);        
+        yline(0, 'color' ,'k', 'linestyle', ':', 'LineWidth', 1);
+
+
+%exportgraphics(gcf,'arrayAntennaMeshMew.png','Resolution',300);
+
+
+% Från plottarna can rötterna grafiskt lokaliseras i följande:
+x1=-1.15;
+x2=-0.29;
+x3=1e-2;
+x4=6.34;
+
+disp("  _____Uppg 5: _________ ")
+
+% Derivera funktionen f över x
+df_dx= @(x) 61 - 7*((x.^2+x+0.03)./(3*1.01*x+1)).^6*( ( (3*1.01*x+1)*(2*x+1) - (x.^2+x+0.03)*(3*1.01) )./( (3*1.01*x+1)^2 ) ) - 20*(exp(-x)-x.*exp(-x));
+
+%Initierar variabler x=input av funktion
+% Val av x1,x2,x3,x4
+x=x4;
+t=1;
+x_forra=1;
+rel_fel=1;
+format short 
+disp("    ___________________Newton Raphson_____________________")
+disp("      x       fx       dfx_dx       t       lin       kvad");
+%Iterativ metod med Newton raphson
+while abs(rel_fel)>1e-8
+    fx=f(x);
+    dfx_dx=df_dx(x);
+
+    %Newton Raphsons metod
+    t_forra=t;
+    t=fx/dfx_dx;
+    
+    lin=t/t_forra;
+    kvad=t/(t_forra^2);
+    
+    disp([x fx dfx_dx t lin kvad]);
+    x_forra=x;
+    x=x-t;
+    rel_fel=(x-x_forra)/x;
+end;
+format long e
+rot_nr=x
+
+rot_1_nr=-1.115141590525118e+00;
+rot_2_nr=-2.910130809545486e-01;
+rot_3_nr=5.334146342066178e-13;
+rot_4_nr=6.397062994660476e+00;
+rotter=[rot_1_nr rot_2_nr rot_3_nr rot_4_nr];
+
+format short 
+
+disp(["Rot 1" "Rot 2" "Rot 3" "Rot 4"])
+disp([ rotter ])
+
+
+% a) 
+% Den minsta postitiva roten blir 2,614777619×10^-15 mindre vilket motsvarar
+% en procentuell ändring på ca 1 %.
+% Den största postitiva roten blir 6,4899*10^-6 större vilket motsvarar en
+% procentuell ökning på ca 1%. 
+% Rötterna påverkas ungefär lika mycket procentuellt sett men påverkas åt
+% olika håll. Varför ändringen blir som den blir beror på att kosntanten
+% står framför en negativ exponent vilket betyder att den har exponentiellt
+% mindre påverkan för högre värden på x
+
+% b)
+% Den minsta postivia roten blir 2,5893914285×10^-15 större vilket motsvara
+% en procentuell ändring på ca 1% 
+% Den största postivita roten blir 6,4898*10^-6 mindre vilket motsvara en
+% procentuell ändring på ca 1 %. Det går här att se att rötterna ändra
+% ungefär lika mycket som i a) fast med omvänt tecken. Detta beror på samma
+% förklaring som i a)
+
+% c)
+% Felfortplantningen ger att Ef= 0.1973846874 genom den allmänna
+% felfortplantningsformeln
+
+
+%% 7. Integral med förbehandling
+
+
+
+
