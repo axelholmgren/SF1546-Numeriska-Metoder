@@ -207,33 +207,107 @@ disp("  __________Sekantmetoden___________");
 x0=-1.5;
 x1=-1;
 
-x=x1;
-x_forra=x0; %x0
+
+
+% Från plottarna can rötterna grafiskt lokaliseras i följande:
+x1=-1.15;
+x2=-0.29;
+x3=1e-2;
+x4=6;
+x0=0;
+
+x=x4;
+x_forra=x+.5; %x0
 f_forra=f(0); %f0
-t_forra=1;
-t_foforra=1;
+t_forra=.1;
+t_foforra=0.1;
+
+t_n_list={};
+
+
 disp("     x        f      korr_term      konverg") 
 format short e
 while abs(x-x_forra)>1e-8
 
+    
+    
     f_n=f(x); %Beräknar nuvarande funktionsvärdet
 
-    t_n=f_n*(x-x_forra)/(f_n-f_forra);
+    d_f= f_n - f_forra;
+    d_x= x - x_forra;
+    
+
+    t_n=f_n*d_x/d_f;
+
+    t_n_list{end+1}=t_n;
+
+    %t_n=f_n*(x-x_forra)/(f_n-f_forra);
+    
+    prop=t_n/(t_forra);
 
 
     k=t_n/(t_forra*t_foforra);
 
-    disp([x f_n t_n k]) 
+    disp([x f_n t_n k prop]) 
+
+    % N blir N-1
     x_forra=x;
     f_forra=f_n; 
     t_foforra=t_forra;
     t_forra=t_n;
-    
+
+    %tar ett steg
     x=x-t_n; 
-    
+
+  
 
 end; 
 rot=x
+
+disp(t_n_list)
+
+
+% Skapa en figur för plottningen
+% figure;
+% 
+% plot(range(length(t_n_list)), t_n_list{1:end}, "o")
+%plot(linspace(0,length(t_n_list), length(t_n_list)), t_n_list) 
+%%
+% K_list={};
+% exponent_list={};
+% t_forra=0;
+% exponent=1.5;
+% K_forra=5;
+% K=5.5;
+% while abs(exponent)<1.7
+%     % Loopa igenom varje element i listan
+% 
+%     for i = 2:length(t_n_list)
+%         % Hämta det aktuella elementet
+%         t_n = t_n_list{i};
+%         t_forra= t_n_list{i-1};
+% 
+%         K_forra=K;
+%         K=t_n/(t_forra^(exponent));
+% 
+%         K_diff=K-K_forra;
+%         if abs(K_diff)<0.5
+%             exponent
+%             % Gör något med det aktuella elementet, t.ex. visa det
+%             %disp(['iter ', num2str(i), ': ', exponent]);
+%         end
+% 
+%         % Gör något med det aktuella elementet, t.ex. visa det
+%         %disp(['iter ', num2str(i), ': ', exponent]);
+% 
+%     end
+%     exponent=exponent+.01;
+% 
+% end
+% exponent;
+
+
+% b) Ger exakt samma rot som med newton raphson, hittar inte -.29
 
 % c)
 
@@ -443,3 +517,28 @@ subplot(3,3,8);
 % alla punkter. Däremot är den inte lika effektiv som de andra metoderna.
 % Det går inte att säga att en är bättre än den andra, det beror på vad som
 % pritoriteras.
+
+
+%% Uppg 6 
+
+
+
+df_dx= @(x) ( 1-1*exp( -(x/5).^3)) /(5*x.^3);
+
+
+
+%% a)
+
+x0=0;
+x1=1e-4;
+
+x=linspace(x0,x1)
+y=integral(df_dx,x, x)
+
+
+
+
+
+
+
+
