@@ -1,3 +1,57 @@
+function secant_method()
+    % Definiera funktionen
+    f = @(x) 61 * x - ((x.^2 + x + 0.03) ./ (3 * x + 1)).^7 - 20 * x .* exp(-x);
+
+    % Initiala uppskattningar
+    x0 = 0.0;
+    x1 = 0.6;
+
+    % Toleranskrav
+    tol = 1e-8;
+    
+    % Beräkna roten
+    [root, iterations, rel_errors] = secant(f, x0, x1, tol);
+    
+    % Beräkna konvergensordningen
+    convergence_order = log(rel_errors(end) / rel_errors(end-1)) / log(rel_errors(end-1) / rel_errors(end-2));
+    
+    % Visa resultat
+    fprintf('Rot: %.12f\n', root);
+    fprintf('Antal iterationer: %d\n', iterations);
+    fprintf('Konvergensordning: %.3f\n', convergence_order);
+end
+
+function [root, iterations, rel_errors] = secant(f, x0, x1, tol)
+    % Lista för relativa fel
+    rel_errors = [];
+    
+    iterations = 0;
+    
+    while true
+        % Beräkna ny punkt
+        fx0 = f(x0);
+        fx1 = f(x1);
+        x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0);
+
+        % Relativt fel
+        rel_error = abs((x2 - x1) / x2);
+        rel_errors = [rel_errors; rel_error];
+        
+        % Kontrollera tolerans
+        if rel_error < tol
+            break;
+        end
+
+        % Flytta fram punkterna
+        x0 = x1;
+        x1 = x2;
+        iterations = iterations + 1;
+    end
+    
+    root = x1;
+end
+
+
 %% uppg 4 Interpolation och linjära minsta kvadratmetoden
 
 % Matrisen A ger datum: tid (sekunder)
@@ -451,10 +505,11 @@ disp([ rotter ])
 
 % c)
 % Felfortplantningen ger att Ef= 0.1973846874 genom den allmänna
-% felfortplantningsformeln
-
+% felfortplantningsformeln och ger felgränserna: 3.397062994660476 (+-)
+% 0.1973846874
 
 %% 7. Integral med förbehandling
+
 
 
 
